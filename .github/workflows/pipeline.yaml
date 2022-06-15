@@ -10,7 +10,7 @@ on:
       - master
 
 # action to manually run workflow
-  workflow_dispatch
+  workflow_dispatch:
 
 #Workflow variables should contain two variables: 
 #DEPLOY_VER - should contains SHA;YEAR - any year as you choose
