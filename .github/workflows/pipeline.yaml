@@ -1,0 +1,85 @@
+# Naming the workflow
+
+name: CI
+
+# state when the workflow will be run
+
+on:
+  push:
+    branches:
+      - master
+
+# action to manually run workflow
+  workflow_dispatch
+
+#Workflow variables should contain two variables: 
+#DEPLOY_VER - should contains SHA;YEAR - any year as you choose
+
+
+env:
+  year = 2022
+  DEPLOY_VER: "${{ github.sha }}"
+
+#First job should:
+#Step should:
+#Print the list of files/directories in your github repository.
+#Print content of your log.txt file.
+#Print: “Hello from “your DEPLOY_VER variable’s content” commit”
+
+
+  first_job:
+    # the enironment the job will run on
+    runs-on: Ubuntu-18.04
+
+    # define a sequence of steps that will be run as part of the job
+
+    steps: 
+      - uses: actions/checkout@v3
+      - name: Print the list of files/directories in my github repository
+        run: |
+          git ls-files
+      - name: Print content of your log.txt file.
+        run: |
+          cat TASK1/log.txt
+      - name: print commit
+        run: |
+          echo "Hello from $DEPLOY_VER commit"
+
+#Second job should:
+#Run  after the First job is finished.
+#Contain variable MONTH- any month as you choose
+
+  second_job:
+   runs-on: Ubuntu-18.04
+   needs: [first_job]
+
+   env:
+     MONTH: "July"
+
+   - uses: actions/checkout@v3 
+   - name: idea time
+     run: |
+          DAY_OF_THE_MONTH=22
+          echo "DAY_OF_THE_MONTH=${DAY_OF_THE_MONTH}" >> $GITHUB_ENV
+
+   - name: Print the system date and time
+        run: echo "The current date and time is $(date +'%Y-%m-%dT%H:%M:%S')"
+
+   - name: Print content of the variables
+        run: |
+          echo "Day - $DAY_OF_THE_MONTH;"
+          echo "Month - $MONTH"
+          echo "Year - $YEAR."
+
+#Imagine that you keep in secret your favorite day of week (FAVORITE_DAY_OF_WEEK) and don’t want to share it with anyone. So where will you define it?
+#Print: “My favorite day of week is “content of FAVORITE_DAY_OF_WEEK””
+
+#What result did you get and why?
+
+    - name: Print my favorite day of week
+        run: |
+          echo "My favorite day of week:" 
+          echo ${{ secrets.FAVORITE_DAY_OF_WEEK }}
+
+      
+     
