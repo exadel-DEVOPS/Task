@@ -21,10 +21,9 @@ env:
 #Print the list of files/directories in your github repository.
 #Print content of your log.txt file.
 #Print: “Hello from “your DEPLOY_VER variable’s content” commit”
-
 jobs:
 
-  first_job:
+first_job:
     # the enironment the job will run on
     runs-on: Ubuntu-18.04
 
