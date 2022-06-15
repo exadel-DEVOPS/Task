@@ -35,7 +35,7 @@ jobs:
       # Print content of your log.txt file.
       - name: Print content of your log.txt file.
         run: |
-          cat TASK11/log.txt
+          cat TASK1/log.txt
           
        # Print commit
       - name: Print commit
