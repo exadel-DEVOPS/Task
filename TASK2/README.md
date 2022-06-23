@@ -6,14 +6,13 @@
 # mandatory task
 # 1.created a security group with the necessary pemissions
 
-<img width="917" alt="image" src="https://user-images.githubusercontent.com/107506005/174431645-0645915e-2616-446f-a17e-7ad22e2553d0.png">
+
 
 
 # 2. Created key pairs for ssh
 
 # 3. Created  a security for both ec2 to allow ssh, HTTP connection and ping
 
-![image](https://user-images.githubusercontent.com/107506005/174437005-31d57311-1327-4ad6-9f37-0c514d58089b.png)
 
 # 4. I created Ubuntu and Amazon linux 2 instances
 
