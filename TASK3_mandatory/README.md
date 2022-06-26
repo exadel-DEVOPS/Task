@@ -39,6 +39,8 @@ The variables are contained in the __variables.tf__ file
 
 ![image](https://user-images.githubusercontent.com/107506005/175815699-67d6b564-1344-49e5-9c70-1f546c51b0e3.png)
 
+<img width="837" alt="image" src="https://user-images.githubusercontent.com/107506005/175816640-48fa30ac-f14f-4703-96cf-df421b421450.png">
+
 
 
 
