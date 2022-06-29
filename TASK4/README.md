@@ -117,5 +117,64 @@ jobs:
           
           
           
+#### 5.  Create docker-compose file. Deploy a few docker containers via one docker-compose file. 
+####  first image - your docker image from the previous step. 5 nodes of the first image should be run;
+#### second image - any java application;
+#### last image - any database image (mysql, postgresql, mongo or etc.).
+#### Second container should be run right after a successful run of a database container.
+#### EXTRA 5.1. Use env files to configure each service.
 
 
+```
+#####docker-compose.yml
+
+version: '3'
+services:
+  webserver:
+    restart: always
+    build: .
+    ports:
+      - "80"
+    env_file:
+      - webserver-env/.env
+
+
+  java-app:
+    restart: always
+    container_name: java-app
+    image: jetty
+    ports:
+      - "8080:8080"
+    env_file:
+      - java-env/.env
+    depends_on:
+      - docker-mysql
+      
+  docker-mysql:
+    restart: always
+    container_name: docker-mysql
+    image: mysql
+    env_file:
+      - db-env/.env
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "6033:3306"
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
+```
+##### to make 5 nodes
+```
+docker-compose up --scale webserver=5
+```
+
+#### Image of five running nodes
+
+
+<img width="930" alt="image" src="https://user-images.githubusercontent.com/107506005/176459194-dbc6b661-13c9-4f65-be75-84e0d822b811.png">
+
+
+ALL STEPS COMPLETED
