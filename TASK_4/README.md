@@ -1,5 +1,14 @@
 # TASK4 DOCKER
 
+
+### File listing
+
+#### There's is a docker_task directory. Inside the directory, there's:
+##### 1. webfiles contains the configuration for nginx and html folder for index.html
+##### 2. Dockerfile__ for apache
+##### 3. docker-compose.yml__ contains docker-compose
+###### 4. dockerfile-nginx__ contains nginx dockerfile
+###### 5. 
 ## 1. Install docker. (Hint: please use VMs or Clouds  for this.)
 ## EXTRA 1.1. Write bash script for installing Docker
 
