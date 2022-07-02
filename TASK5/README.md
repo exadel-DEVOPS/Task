@@ -7,7 +7,7 @@
 
 <img width="762" alt="image" src="https://user-images.githubusercontent.com/107506005/176917444-098661cd-2dc6-4f90-b3f1-e95407fe862e.png">
 
-#### to install ansible on the control plane
+#### to install ansible on the control plane (script contained in script.sh)
 
 ```
 sudo apt update
@@ -17,7 +17,8 @@ sudo apt update
 sudo apt install ansible
 ```
 
-3. Ping pong - execute the built-in ansible ping command. Ping the other two machines.
+
+##### 3. Ping pong - execute the built-in ansible ping command. Ping the other two machines.
 
 a. first, i set up a file caled  inventory to group the 2 machines
 b. next i configured an ansible.cfg file to disable ssh key checking on my key then ran the following command
@@ -29,7 +30,10 @@ ansible -i inventory -m ping all
 <img width="775" alt="image" src="https://user-images.githubusercontent.com/107506005/176918605-bbceb5f0-9a88-4336-9a38-9c0e8002c044.png">
 
 ### 3. My First Playbook: write a playbook for installing Docker on two machines and run it.
+
 To do this, i created a yaml file to install docker on both webservers and also run the hello-world container from the docker hello-world image.
+#### playbook contained in docker.yml
+
        
 ```
 ---
@@ -83,9 +87,13 @@ ansible-playbook -i docker.yaml --syntax-check
 ansible-playbook -i inventory  docker.yaml
 ```
 
+
+
 <img width="874" alt="image" src="https://user-images.githubusercontent.com/107506005/176922192-6bc847fa-3fb2-46a4-a131-3e0cbe1d6f8a.png">
 
 ### EXTRA 1. Write a playbook for installing Docker and one of the (LAMP/LEMP stack, Wordpress, ELK, MEAN - GALAXY do not use) in Docker.
+
+##### contained in wordpress.yml
 
 ```
 ---
@@ -162,6 +170,7 @@ tasks:
         - wordpress:/var/www/html
 ```
 
+
 ## EXTRA 2. Playbooks should not have default creds to databases and/or admin panel.
 
 <img width="716" alt="image" src="https://user-images.githubusercontent.com/107506005/176940658-26070234-53e2-49e4-bbf9-b55c713fc9eb.png">
@@ -194,8 +203,8 @@ ansible-inventory -i <Path to file>
 ```
 ---
 plugin: aws_ec2
-aws_access_key: AKIAUG644LHZXMTMIAPO
-aws_secret_key: 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
+aws_access_key: <access_id>
+aws_secret_key: <access_key>
 keyed_groups:
   - key: tags
     prefix: tag
