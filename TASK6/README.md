@@ -40,9 +40,62 @@ docker run -p 8080:8080 -p 50000:50000 -v /your/home:/var/jenkins_home jenkins
 
 <img width="947" alt="image" src="https://user-images.githubusercontent.com/107506005/177626723-ca1396c3-8f91-40eb-a842-aeefc7d303d2.png">
 
-
 <img width="920" alt="image" src="https://user-images.githubusercontent.com/107506005/177659023-0b45d350-f4f3-412e-84b6-40b7cafcb0c9.png">
+
+
+##4. 
 <img width="909" alt="image" src="https://user-images.githubusercontent.com/107506005/177661451-5b64bb1b-3f5e-4ce3-8de3-d944626f7bf7.png">
 
+## Create Pipeline which will execute docker ps -a in docker agent, running on Jenkins master’s Host.
 
+```
+pipeline {
+  agent any
+  stages {
+    stage("build") {
+      steps {
+        sshagent(credentials: ['Jenkins']) {
+          sh '''
+            ssh -o StrictHostKeyChecking=no -l root 172.17.0.1 docker ps -a
+          '''
+        }
+      }
+    }
+  }
+}
+```
+
+
+
+## 6. Create Pipeline, which will build artifact using Dockerfile directly from your github repo (use Dockerfile from previous task)
+
+```
+node('master') {
+    stage('Git checkout'){
+    git branch: 'dev', credentialsId: 'github-ssh-key', url: 'git@github.com:exadel-DEVOPS/Task.git'
+    }
+    stage('Build Docker Image'){
+    sh 'docker build -t exadel-DEVOPS/apache:latest Task6'
+    }
+    stage('Push Docker Image'){
+    withCredentials([string(credentialsId: 'dockerhub-password', variable: 'dockerHubPwd')]) {
+        sh "docker login -u exadel-DEVOPS -p ${dockerHubPwd}"
+        }
+    sh 'docker push exadel-DEVOPS/apache:latest '
+    }
+}
+```
+
+##  Pass  variable PASSWORD=QWERTY! To the docker container. Variable must be encrypted!!!
+
+
+```
+node('main') {
+  stage('Run Docker Container'){
+    withCredentials([string(credentialsId: 'Pwd', variable: 'Pwd')]) {
+      sh "docker run -itd -e PASSWORD=${Pwd} --rm -p 88:80 islommamatov apache:latest"
+    }
+  }
+}
+```
 
