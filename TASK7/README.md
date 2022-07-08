@@ -136,3 +136,46 @@ In the active mode, all data processing is performed on the agent, without the i
 <img width="946" alt="image" src="https://user-images.githubusercontent.com/107506005/178033897-bf1dc989-bf63-499f-94fc-ed945cd1ada4.png">
 
  
+ ## 1.5 Make an agentless check of any resource (ICMP ping)
+ 
+ Zabbix can check if a host is responding to ICMP ping packets. Thus, it is possible to control the availability of a server, as well as the response time and packet loss.
+
+### steps i did
+
+1. Checked if fping is installed on my zabbix server
+```
+which fping
+```
+
+2. edited the server_conf file and pasted the following
+```
+StartPingers=10
+FpingLocation=/usr/sbin/fping
+```
+3. Added the host that needs monitoring on the zabbix
+
+<img width="940" alt="image" src="https://user-images.githubusercontent.com/107506005/178046140-8de795f6-17ce-4250-9f05-b2f13d95fef9.png">
+<img width="911" alt="image" src="https://user-images.githubusercontent.com/107506005/178047006-4492c2ef-bac2-4c4b-9f63-561bcf28acf2.png">
+
+## 1.6 Provoke an alert - and create a Maintenance instruction
+
+
+<img width="948" alt="image" src="https://user-images.githubusercontent.com/107506005/178049298-b759250b-bdd2-4b9b-913a-52c7e1ed0825.png">
+
+
+###### maintenance
+
+You can define maintenance periods for host groups, hosts and specific triggers/services in Zabbix.
+
+There are two maintenance types - with data collection and with no data collection.
+
+<img width="940" alt="image" src="https://user-images.githubusercontent.com/107506005/178077423-ca478aae-df4c-4cbe-b0ae-7e7fdff7cb04.png">
+
+
+## 1.7 Set up a dashboard with infrastructure nodes and monitoring of hosts and software installed on them
+
+
+<img width="948" alt="image" src="https://user-images.githubusercontent.com/107506005/178081473-1b0faca2-a68c-4fb6-9d7b-37aea13f2b75.png">
+
+ 
+ 
