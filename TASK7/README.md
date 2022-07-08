@@ -54,4 +54,17 @@ zcat /usr/share/doc/zabbix-sql-scripts/mysql/server.sql.gz | mysql -uzabbix -p z
  
  Zabbix server is ready at http://3.90.78.248/zabbix/setup.php
  
+ ## 1.2 Prepare VM or instances
+ 
+ #####  I prepared 2 VMS
+ <img width="905" alt="image" src="https://user-images.githubusercontent.com/107506005/177949116-ea998510-145e-47cf-ba79-0729b6ae2dd4.png">
+
+## 1.2.1 Install Zabbix agents on previously prepared servers or VM.
+
+####### check the next for this answer
+
+## Extra 1.2.2: Complete 1.2.1 using ansible
+
+
+ 
  
