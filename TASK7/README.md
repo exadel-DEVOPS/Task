@@ -179,3 +179,9 @@ There are two maintenance types - with data collection and with no data collecti
 
  
  
+
+# 2. ELK:
+ Nobody is forgotten and nothing is forgotten.
+ 
+ ## 2.1 Install and configure ELK
+pulled a docker ELK image and run a container
