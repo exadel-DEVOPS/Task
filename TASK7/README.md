@@ -185,3 +185,10 @@ There are two maintenance types - with data collection and with no data collecti
  
  ## 2.1 Install and configure ELK
 pulled a docker ELK image and run a container
+
+```
+ sudo docker run -d  -p 5601:5601 -p 9200:9200 -p 5044:5044 -itd --name elk sebp/elk
+````
+
+by default, when starting a container, all of the three ELK services are started by default (Kibana, logstash, kibana are started)
+
