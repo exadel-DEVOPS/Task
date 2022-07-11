@@ -273,3 +273,49 @@ docker run -p 80:80 -it --network=elknet imageName
 
 
 
+# 3. Grafana:
+
+## 3.1 Install Grafana
+
+I installed Grafana as a docker container
+
+```
+docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
+```
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/107506005/178259658-e1f6e66c-a42d-46f3-bc50-70621a83de97.png">
+
+## 3.2 Integrate with installed ELK
+
+We will download the logs.jsonl file from the elastic servers:
+
+```
+curl -O https://download.elastic.co/demos/kibana/gettingstarted/7.x/logs.jsonl.gz
+```
+
+#### Gunzip the file
+
+```
+gunzip logs.jsonl.gz
+```
+#### To upload to Elasticsearch:
+
+```
+curl -H 'Content-Type: application/x-ndjson' -XPOST 'localhost:9200/_bulk?pretty' --data-binary @logs.jsonl
+```
+
+##### Added a data source of type Elasticsearch
+
+<img width="952" alt="image" src="https://user-images.githubusercontent.com/107506005/178260849-43219352-3840-4996-9d0e-2061f933127c.png">
+
+##### Data source saved
+
+<img width="936" alt="image" src="https://user-images.githubusercontent.com/107506005/178261626-2e0b8278-dfe5-45d1-8ced-4e3a7a4a4791.png">
+
+
+## 3.3 Set up Dashboards
+
+
+
+
+
