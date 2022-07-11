@@ -190,5 +190,86 @@ pulled a docker ELK image and run a container
  sudo docker run -d  -p 5601:5601 -p 9200:9200 -p 5044:5044 -itd --name elk sebp/elk
 ````
 
-by default, when starting a container, all of the three ELK services are started by default (Kibana, logstash, kibana are started)
+## 2.2 Organize collection of logs from docker to ELK and receive data from running containers
+
+### Step 1 - Configuring Filebeat:
+
+```
+mkdir filebeat_docker && cd $_
+touch Dockerfile && nano Dockerfile
+```
+
+Inside the docker file, there is the following
+
+```
+FROM docker.elastic.co/beats/filebeat:7.5.1
+ 
+COPY filebeat.yml /usr/share/filebeat/filebeat.yml
+USER root
+RUN mkdir /usr/share/filebeat/dockerlogs
+RUN chown -R root /usr/share/filebeat/
+RUN chmod -R go-w /usr/share/filebeat/
+```
+In the directory, there's a file called filebeat.yml containing the following:
+
+```
+filebeat.inputs:
+  - type: docker
+    containers:
+      path: "/usr/share/dockerlogs/data"
+      stream: "stdout"
+      ids:
+        - "*"
+      cri.parse_flags: true
+      combine_partial: true
+      exclude_files: ['\.gz$']
+ 
+processors:
+  - add_docker_metadata:
+      host: "unix:///var/run/docker.sock"
+ 
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+ 
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+ 
+log files:
+logging.level: error
+logging.to_files: false
+logging.to_syslog: false
+loggins.metrice.enabled: false
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
+ssl.verification_mode: none
+```
+
+```
+docker build -t filebeatimage .
+```
+
+### Step 2: Run the docker container
+
+```
+docker run -p 80:80 -it --network=elknet filebeatimage
+```
+
+For forwarding logs from a Docker container to the ELK container on a host, we need to connect the two containers. So, we have to create new network bridge.
+
+```
+docker network create -d bridge elknet
+```
+Now, we can run log-emitting container
+
+```
+docker run -p 80:80 -it --network=elknet imageName
+```
+
+## 2.3 Customize your dashboards in ELK
+
+
 
